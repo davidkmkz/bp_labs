@@ -14,5 +14,5 @@ googlemaps
 numpy
 pandas
 plotly
-scikit-learn @ git+https://github.com/scikit-learn/scikit-learn.git@d7a114413d1f11bf5f7029cd519c9a29a66b1890
+scikit-learn
 
