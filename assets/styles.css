@@ -1,0 +1,277 @@
+@font-face {
+    font-family: 'Lato';
+    src: url('assets/Lato/Lato-Regular.ttf') format('truetype');
+}
+
+body {
+    font-family: 'Lato', sans-serif;
+}
+
+.sidebar {
+    position: fixed;
+    width: 192px;
+    height: 100vh;
+    background: #FFFFFF;
+    color: #2C2C2C;
+}
+
+.page-content {
+    margin-left: 0;
+    background: #F5F5F5;
+}
+
+.nav-link.active {
+    color: #26A6EE !important;
+    background: #DEF2FC !important;
+}
+
+.nav-link {
+    color: #2C2C2C;
+}
+
+.nav-link:focus, .nav-link:hover{
+    color: #2C2C2C;
+}
+
+.CalendarDay__selected {
+    background: #26A6EE;
+    border: 1px double #26A6EE;
+}
+
+.CalendarDay__selected_span {
+    background: #C9EFF9;
+    border: 1px double #C9EFF9;
+    color: #26A6EE;
+}
+
+.DayPickerKeyboardShortcuts_show__bottomRight::before {
+    border-top: 26px solid transparent;
+    border-right: 33px solid #26A6EE;
+    bottom: 0;
+    right: 0;
+}
+
+.DayPickerNavigation_button__horizontalDefault {
+    background-color: #C9EFF9;
+    padding: 9px 13px;
+
+}
+
+.DayPickerNavigation_svg__horizontal {
+    fill: #141414;
+}
+
+#date-picker {
+    width: calc(40% - 12px) !important;
+    height: 48px !important;
+}
+
+#date-picker-range {
+    width: calc(40% - 12px) !important;
+    height: 48px !important;
+}
+
+#product-dropdown {
+    width: calc(60% - 12px) !important;
+    height: 48px !important;
+}
+
+#date-picker .DateRangePicker_picker {
+    width: 100% !important;
+}
+
+#product-dropdown .Select-control {
+    height: 48px !important;
+}
+
+.nav-link {
+    display: flex;
+    align-items: center;
+}
+
+.nav-link img {
+    margin-right: 10px;
+}
+
+.my-layout {
+    margin-left: 0;
+}
+
+#dropdown-date-picker {
+    display: flex;
+    flex-direction: row;
+    width: calc(100% - 64px);
+    margin-left: 32px;
+    margin-right: 32px;
+    justify-content: space-between;
+}
+
+#line-chart-container {
+    width: calc(49% - 32px);
+    height: 430px;
+    flex-shrink: 0;
+    border-radius: 8px;
+    background: #FFF;
+    margin-top: 32px;
+    margin-left: 32px;
+    margin-right: 32px;
+}
+
+#div-container {
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: 32px;
+    width: calc(49% - 16px);
+    height: 430px;
+    margin-right: 32px;
+}
+
+#div1{
+    width: calc(50% - 16px);
+    height: calc(50% - 16px);
+    background: #FFF;
+    margin-right: 16px;
+    margin-bottom: 16px;
+    border-radius: 8px;
+}
+
+#div2{
+    width: calc(50% - 16px);
+    height: calc(50% - 16px);
+    background: #FFF;
+    margin-left: 16px;
+    margin-bottom: 16px;
+    border-radius: 8px;
+}
+
+#div3 {
+    width: calc(50% - 16px);
+    height: calc(50% - 16px);
+    background: #FFF;
+    margin-right: 16px;
+    margin-top: 16px;
+    border-radius: 8px;
+}
+
+#div4 {
+    width: calc(50% - 16px);
+    height: calc(50% - 16px);
+    background: #FFF;
+    margin-left: 16px;
+    margin-top: 16px;
+    border-radius: 8px;
+}
+
+#graph-div-container {
+    display: flex;
+    width: 100%;
+}
+
+#map-container {
+    width: calc(49% - 32px);
+    height: 430px;
+    flex-shrink: 0;
+    border-radius: 8px;
+    background: #FFF;
+    margin-top: 32px;
+    margin-left: 32px;
+}
+
+#empty-div {
+    width: calc(49% - 38px);
+    height: 430px;
+    flex-shrink: 0;
+    border-radius: 8px;
+    background: #FFF;
+    margin-top: 32px;
+    margin-left: 32px;
+}
+
+#map-empty-div-container {
+    display: flex;
+}
+
+.my-layout {
+    min-height: 170vh !important; 
+    width: 100%;
+}
+
+.has-value.Select--single>.Select-control .Select-value .Select-value-label, .has-value.is-pseudo-focused.Select--single>.Select-control .Select-value .Select-value-label {
+    color: #333;
+    vertical-align: text-top;
+}
+
+.Select, .Select div, .Select input, .Select span {
+    border-radius: 8px;
+    border: none;
+}
+
+#new-row {
+    height: 100%;
+    width: calc(100% - 64px);
+    background-color: white;
+    border-radius: 8px;
+    margin-top: 32px;
+    margin-right: 32px;
+    margin-left: 32px;
+}
+
+  .CalendarDay__selected_span:active,
+  .CalendarDay__selected_span:hover {
+    background: #26A6EE;
+    border: 1px double #26A6EE;
+    color: #fff;
+  }
+
+  .CalendarDay__selected:hover {
+    background: #26A6EE;
+    border: 1px double #26A6EE;
+    color: #fff
+  }
+
+  .DateInput_input__focused {
+    border-bottom: 2px solid #26A6EE;
+  }
+
+.DateRangePickerInput__withBorder {
+    border-radius: 8px;
+    border: none;
+    height: 48px;
+}
+
+
+.DateInput {
+
+    background: #fff;
+    position: relative;
+    display: inline-block;
+    width: 47%;
+    vertical-align: middle;
+    border-radius: 8px !important;
+}
+
+.DateInput_input {
+    border-radius: 8px !important;
+}
+
+.DayPickerNavigation_button__default {
+    border: 1px;
+}
+
+.DayPickerNavigation_leftButton__horizontalDefault{
+    content: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="0.1in" height="0.155556in" viewBox="0 0 9 14"><path id="Vector 6" fill="none" stroke="%230CA6F2" stroke-width="2" d="M 8.00,13.00 C 4.00,9.00 2.33,7.33 2.00,7.00 2.00,7.00 8.00,1.00 8.00,1.00" /></svg>');
+    visibility: visible;
+    position: absolute;
+
+}
+.DayPickerNavigation_leftButton__horizontalDefault_-5 {
+    content: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="0.1in" height="0.155556in" viewBox="0 0 9 14"><path id="Vector 6" fill="none" stroke="%230CA6F2" stroke-width="2" d="M 8.00,13.00 C 4.00,9.00 2.33,7.33 2.00,7.00 2.00,7.00 8.00,1.00 8.00,1.00" /></svg>');
+    visibility: visible;
+    position: absolute;
+}
+
+.DayPickerNavigation_rightButton__horizontalDefault_5 {
+    content: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="0.1in" height="0.155556in" viewBox="0 0 9 14"><path id="Vector 6" fill="none" stroke="%230CA6F2" stroke-width="2" d="M 1.00,1.00 C 5.00,5.00 6.67,6.67 7.00,7.00 7.00,7.00 1.00,13.00 1.00,13.00" /></svg>');
+    visibility: visible;
+    position: absolute;   
+}
