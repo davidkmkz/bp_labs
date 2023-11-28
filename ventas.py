@@ -150,50 +150,8 @@ def layout():
                 className='my-custom-tooltip',
             ),
             html.Div([
-                dash_table.DataTable(
-                    id='zona-order-table',
-                    columns=[{"name": "#", "id": "position"}, {"name": "Ubicación", "id": "zona"}, {"name": "Ordenes", "id": "ordenes"}],
-                    style_table={'overflowX': 'auto', 'maxHeight': '390px', 'overflowY': 'auto'},
-                    style_data={
-                        'height': '42px',  # Adjust the height here
-                        'borderBottom': '1px solid #E1E1E1'  # Add a border to the bottom of each cell
-                    },
-                    style_cell={
-                        'minWidth': '50px', 
-                        'width': '50px', 
-                        'maxWidth': '50px', 
-                        'whiteSpace': 'normal',
-                        'border': 'none',  # Remove the lines around the table
-                        'font-size': '14px',  # Set the font size
-                        'font-family': 'Lato'  # Set the font family
-                    },
-                    style_header={
-                        'border': 'none',  # Remove the column lines
-                        'backgroundColor': 'white',  # Set the background color to white
-                    },
-                    style_cell_conditional=[
-                        {'if': {'column_id': 'position'}, 'width': '10%', 'textAlign': 'center', 'margin-right': '10px'},  # Adjust the width here
-                        {'if': {'column_id': 'zona'}, 'width': '70%', 'textAlign': 'left', 'padding-left': '30px'},  # Add padding to the left side of the "zona" column
-                        {'if': {'column_id': 'ordenes'}, 'width': '20%', 'textAlign': 'center'}
-                    ],
-                    style_data_conditional=[
-                        {
-                            'if': {'column_id': 'position'},
-                            'color': '{color}'
-                        },
-                        {
-                            'if': {
-                                'filter_query': '{position} lt 5'  # Change the number as per your requirement
-                            },
-                            'color': 'white'
-                        }
-                    ],
-                    css=[{
-                        'selector': '.dash-cell div.dash-cell-value',
-                        'rule': 'display: inline; white-space: inherit; overflow: inherit; text-overflow: inherit;'
-                    }],
-                ), 
-            ], id='empty-div', style={'padding': '24px'}),
+    html.Table(id='zona-order-table'),
+], id='empty-div', style={'padding': '24px'}),
         ], id='map-empty-div-container'),
         html.Div([
             dcc.Graph(
@@ -322,8 +280,19 @@ def update_popup(is_open, selected_product, start_date, end_date):
         return update_map(selected_product, start_date, end_date)  # Call the function that updates the map
     return dash.no_update
 
+
+#Table
+
+def hex_to_rgb(hex_color):
+    hex_color = hex_color.lstrip('#')
+    return tuple(int(hex_color[i:i+2], 16) for i in (0, 2, 4))
+
+def is_color_light(rgb):
+    # Calculate brightness of color according to perceived luminance
+    return (0.299 * rgb[0] + 0.587 * rgb[1] + 0.114 * rgb[2]) / 255 > 0.5
+
 @app.callback(
-    Output('zona-order-table', 'data'),
+    Output('zona-order-table', 'children'),
     Input('product-dropdown', 'value'),
     Input('date-picker-range', 'start_date'),
     Input('date-picker-range', 'end_date')
@@ -356,28 +325,26 @@ def update_table(selected_product, start_date, end_date):
     table_data = table_data.reset_index(drop=True)
     table_data['position'] = table_data.index + 1
 
-    return table_data[['position', 'zona', 'ordenes']].to_dict('records')
+    # Reverse the color scale
+    reversed_colors = custom_color_scale[::-1]
 
-@app.callback(
-    Output('zona-order-table', 'style_data_conditional'),
-    Input('zona-order-table', 'data')
-)
-def update_styles(data):
-    reversed_colors = custom_color_scale[::-1]  # Reverse the color list
-    styles = []
-    for i in range(len(data)):
-        color = reversed_colors[i % len(reversed_colors)]
-        # Calculate brightness of the color to decide whether to use black or white text
-        r, g, b = [int(color[i:i+2], 16) for i in (1, 3, 5)]  # Convert hex color to RGB
-        brightness = (r * 299 + g * 587 + b * 114) / 1000
-        text_color = '#000000' if brightness > 125 else '#ffffff'  # Black for bright colors, white for dark colors
-        style = {
-            'if': {'column_id': 'position', 'filter_query': '{{position}} = {pos}'.format(pos=data[i]['position'])},
-            'backgroundColor': color,
-            'color': text_color,
-        }
-        styles.append(style)
-    return styles
+    # Create the table
+    table = html.Table([
+        html.Thead([
+            html.Tr([html.Th("#"), html.Th("Ubicación"), html.Th("Ordenes")])
+        ]),
+        html.Tbody([
+            html.Tr([
+                html.Td(html.Div([i+1], style={'height': '25px', 'width': '25px', 'background-color': reversed_colors[i % len(reversed_colors)], 'color': '#000' if is_color_light(hex_to_rgb(reversed_colors[i % len(reversed_colors)])) else '#fff', 'margin': '13.5px auto', 'border-radius': '4px', 'text-align': 'center', 'line-height': '25px'}), style={'height': '52px'}),
+                html.Td(row['zona']),
+                html.Td(row['ordenes'])
+            ], style={'border-bottom': '1px solid #E1E1E1'}) for i, row in table_data.iterrows()
+        ])
+    ])
+
+    return html.Div([
+    table
+], style={'overflow-y': 'auto', 'height': '385px', 'width': 'auto'})
 
 @app.callback(
     Output('line-chart', 'figure'),

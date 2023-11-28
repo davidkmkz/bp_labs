@@ -293,3 +293,26 @@ body {
 .my-custom-tooltip .arrow::before {
     border-top-color: #17191A;  /* Change the color as per your requirement */
 }
+
+thead tr th {
+    position: sticky;
+    top: 0;
+    background-color: white;
+    z-index: 1;
+}
+
+table {
+    width: 100%;
+}
+
+#zona-order-table tbody tr td:nth-child(2) {
+    padding-left: 50px;
+}
+
+#zona-order-table thead tr th:nth-child(2) {
+    padding-left: 50px;
+}
+
+#zona-order-table {
+    font-size: 15px;
+}
