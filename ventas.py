@@ -57,7 +57,8 @@ def layout():
                 dbc.Tooltip(
                     "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque nec placerat tellus. Nulla ultrices, sem at blandit maximus, eros massa scelerisque orci, et porta orci lacus non sem.",
                     target='income-period-info',  # The id of the element the tooltip is for
-                    placement='left'
+                    placement='left',
+                    className='my-custom-tooltip',
                 ),
                 dcc.Graph(
                     id='line-chart',
@@ -74,7 +75,8 @@ def layout():
                 dbc.Tooltip(
                     "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque nec placerat tellus. Nulla ultrices, sem at blandit maximus, eros massa scelerisque orci, et porta orci lacus non sem.",
                     target='circle-info',  # The id of the element the tooltip is for
-                    placement='left'
+                    placement='left',
+                    className='my-custom-tooltip',
                 ),
 
                 html.Div([
@@ -86,7 +88,8 @@ def layout():
                 dbc.Tooltip(
                     "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque nec placerat tellus. Nulla ultrices, sem at blandit maximus, eros massa scelerisque orci, et porta orci lacus non sem.",
                     target='orders-info',  # The id of the element the tooltip is for
-                    placement='left'
+                    placement='left',
+                    className='my-custom-tooltip',
                 ),
                 
                 html.Div([
@@ -99,7 +102,8 @@ def layout():
                 dbc.Tooltip(
                     "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque nec placerat tellus. Nulla ultrices, sem at blandit maximus, eros massa scelerisque orci, et porta orci lacus non sem.",
                     target='basket-info',  # The id of the element the tooltip is for
-                    placement='left'
+                    placement='left',
+                    className='my-custom-tooltip',
                 ),
 
                 html.Div([
@@ -112,7 +116,8 @@ def layout():
                 dbc.Tooltip(
                     "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque nec placerat tellus. Nulla ultrices, sem at blandit maximus, eros massa scelerisque orci, et porta orci lacus non sem.",
                     target='clicks-info',  # The id of the element the tooltip is for
-                    placement='left'
+                    placement='left',
+                    className='my-custom-tooltip',
                 ),
             ], id='div-container')
         ], id='graph-div-container'),
@@ -142,6 +147,7 @@ def layout():
                 "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque nec placerat tellus. Nulla ultrices, sem at blandit maximus, eros massa scelerisque orci, et porta orci lacus non sem.",
                 target='map-info',  # The id of the element the tooltip is for
                 placement='left',
+                className='my-custom-tooltip',
             ),
             html.Div([
                 dash_table.DataTable(

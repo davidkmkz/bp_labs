@@ -286,3 +286,10 @@ body {
     max-width: 1000px !important;
     width: 100% !important;
 }
+
+.my-custom-tooltip .tooltip-inner {
+    background-color: #17191A;  /* Change the color as per your requirement */
+}
+.my-custom-tooltip .arrow::before {
+    border-top-color: #17191A;  /* Change the color as per your requirement */
+}
