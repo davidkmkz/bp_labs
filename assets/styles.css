@@ -275,3 +275,14 @@ body {
     visibility: visible;
     position: absolute;   
 }
+
+.large-modal {
+    width: 90% !important;  /* Adjust this value to change the width of the modal */
+    height: 90% !important;   /* Adjust this value to change the height of the modal */
+    max-width: none !important; /* Override the default max-width */
+}
+
+.modal-dialog {
+    max-width: 1000px !important;
+    width: 100% !important;
+}

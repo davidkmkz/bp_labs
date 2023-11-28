@@ -1,8 +1,11 @@
 import pandas as pd
 from datetime import datetime as dt, timedelta
 from dash import dcc, html, Dash
+import dash
+import dash_bootstrap_components as dbc
+import dash_html_components as html
 import dash_table
-from dash.dependencies import Input, Output
+from dash.dependencies import Input, Output, State
 import plotly.graph_objects as go
 import plotly.express as px
 
@@ -25,6 +28,7 @@ def layout():
     one_month_ago = today - timedelta(days=30)
 
     return html.Div([
+        html.Link(href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css', rel='stylesheet'),
         html.Div([
             dcc.Dropdown(
                 id='product-dropdown',
@@ -39,36 +43,77 @@ def layout():
                 end_date=today,
                 display_format='DD/MM/YYYY',
             ),
+            dbc.ButtonGroup([
+                dbc.Button("Mes", id="btn-month", color="primary"),
+                dbc.Button("Quincena", id="btn-fortnight", color="primary"),
+                dbc.Button("Semana", id="btn-week", color="primary"),
+                dbc.Button("Día", id="btn-day", color="primary"),
+            ], className="mr-1"),
         ], id='dropdown-date-picker'),
         html.Div([
             html.Div([
                 html.P('Ingresos generados durante el periodo', style={'margin-left':'24px', 'margin-top':'24px', 'color':'#2C2C2C', 'font-family':'Lato', 'font-size':'22px', 'font-weight':'700'}),
+                html.I(id='income-period-info', className='fas fa-info-circle fa-2x', style={'font-size': '1.2em', 'position': 'absolute', 'right': '0', 'bottom': '0'}),
+                dbc.Tooltip(
+                    "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque nec placerat tellus. Nulla ultrices, sem at blandit maximus, eros massa scelerisque orci, et porta orci lacus non sem.",
+                    target='income-period-info',  # The id of the element the tooltip is for
+                    placement='left'
+                ),
                 dcc.Graph(
                     id='line-chart',
                     style={'height': '80%', 'width': '94%', 'margin-left': '24px', 'margin-right': '24px'}
                 ),
-            ], id='line-chart-container'),
+            ], id='line-chart-container', style={'position': 'relative'}),
             html.Div([
                 html.Div([
                     html.Img(src='assets/ventas_icons/ingresos.svg', style={'height':'44px', 'width':'44px', 'margin-top':'24px', 'margin-left':'24px'}),
                     html.P('Ingresos totales', style={'margin-left':'24px', 'margin-top':'16px', 'color':'#2C2C2C', 'font-family':'Lato', 'font-size':'16px', 'font-weight':'600'}),
                     html.P(id='total-precio-lab', style={'margin-left':'24px', 'margin-top':'24px', 'color':'#2C2C2C', 'font-family':'Lato', 'font-size':'20px', 'font-weight':'800'}),
-                ], id='div1'),
+                    html.I(id='circle-info', className='fas fa-info-circle fa-2x', style={'font-size': '1.2em', 'position': 'absolute', 'right': '0', 'bottom': '0'}),
+                ], id='div1', style={'position': 'relative'}),
+                dbc.Tooltip(
+                    "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque nec placerat tellus. Nulla ultrices, sem at blandit maximus, eros massa scelerisque orci, et porta orci lacus non sem.",
+                    target='circle-info',  # The id of the element the tooltip is for
+                    placement='left'
+                ),
+
                 html.Div([
                     html.Img(src='assets/ventas_icons/ordenes.svg', style={'height':'44px', 'width':'44px', 'margin-top':'24px', 'margin-left':'24px'}),
                     html.P('Ordenes totales', style={'margin-left':'24px', 'margin-top':'16px', 'color':'#2C2C2C', 'font-family':'Lato', 'font-size':'16px', 'font-weight':'600'}),
                     html.P(id='total-order', style={'margin-left':'24px', 'margin-top':'24px', 'color':'#2C2C2C', 'font-family':'Lato', 'font-size':'20px', 'font-weight':'800'}),
-                ], id='div2'),
+                    html.I(id='orders-info', className='fas fa-info-circle fa-2x', style={'font-size': '1.2em', 'position': 'absolute', 'right': '0', 'bottom': '0'}),
+                ], id='div2', style={'position': 'relative'}),
+                dbc.Tooltip(
+                    "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque nec placerat tellus. Nulla ultrices, sem at blandit maximus, eros massa scelerisque orci, et porta orci lacus non sem.",
+                    target='orders-info',  # The id of the element the tooltip is for
+                    placement='left'
+                ),
+                
                 html.Div([
                     html.Img(src='assets/ventas_icons/carrito.svg', style={'height':'44px', 'width':'44px', 'margin-top':'24px', 'margin-left':'24px'}),
                     html.P('Veces agregardo al carrito', style={'margin-left':'24px', 'margin-top':'16px', 'color':'#2C2C2C', 'font-family':'Lato', 'font-size':'16px', 'font-weight':'600'}),
                     html.P(id='total-basket', style={'margin-left':'24px', 'margin-top':'24px', 'color':'#2C2C2C', 'font-family':'Lato', 'font-size':'20px', 'font-weight':'800'}),
-                ], id='div3'),
+                    html.I(id='basket-info', className='fas fa-info-circle fa-2x', style={'font-size': '1.2em', 'position': 'absolute', 'right': '0', 'bottom': '0'}),
+                ], id='div3', style={'position': 'relative'}),
+
+                dbc.Tooltip(
+                    "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque nec placerat tellus. Nulla ultrices, sem at blandit maximus, eros massa scelerisque orci, et porta orci lacus non sem.",
+                    target='basket-info',  # The id of the element the tooltip is for
+                    placement='left'
+                ),
+
                 html.Div([
                     html.Img(src='assets/ventas_icons/clicks.svg', style={'height':'44px', 'width':'44px', 'margin-top':'24px', 'margin-left':'24px'}),
                     html.P('Clicks en producto', style={'margin-left':'24px', 'margin-top':'16px', 'color':'#2C2C2C', 'font-family':'Lato', 'font-size':'16px', 'font-weight':'600'}),
                     html.P(id='total-click', style={'margin-left':'24px', 'margin-top':'24px', 'color':'#2C2C2C', 'font-family':'Lato', 'font-size':'20px', 'font-weight':'800'}),
-                ], id='div4'),
+                    html.I(id='clicks-info', className='fas fa-info-circle fa-2x', style={'font-size': '1.2em', 'position': 'absolute', 'right': '0', 'bottom': '0'}),
+                ], id='div4', style={'position': 'relative'}),
+
+                dbc.Tooltip(
+                    "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque nec placerat tellus. Nulla ultrices, sem at blandit maximus, eros massa scelerisque orci, et porta orci lacus non sem.",
+                    target='clicks-info',  # The id of the element the tooltip is for
+                    placement='left'
+                ),
             ], id='div-container')
         ], id='graph-div-container'),
         html.Div([
@@ -76,7 +121,28 @@ def layout():
                 dcc.Graph(
                     id='map',
                 ),
-            ], id='map-container'),
+                html.I(id='map-info', className='fas fa-info-circle fa-2x', style={'font-size': '1.2em', 'position': 'absolute', 'right': '0', 'bottom': '0'}),
+                dbc.Button("Abrir mapa", id="open-map-button", className="mt-2"),  # Add a button
+            ], id='map-container', style={'position': 'relative'}),
+
+            dbc.Modal(  # Add a modal
+                [
+                    dbc.ModalHeader("Map"),
+                    dbc.ModalBody(dcc.Graph(id='map-popup', style={'height': '80%', 'width': '100%'})),
+                    dbc.ModalFooter(
+                        dbc.Button("Cerrar", id="close-map-button", className="ml-auto")
+                    ),
+                ],
+                id="map-modal",
+                className="large-modal",  # Set the size of the modal
+                centered=True,  # Center the modal vertically in the page
+            ),
+
+            dbc.Tooltip(
+                "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque nec placerat tellus. Nulla ultrices, sem at blandit maximus, eros massa scelerisque orci, et porta orci lacus non sem.",
+                target='map-info',  # The id of the element the tooltip is for
+                placement='left',
+            ),
             html.Div([
                 dash_table.DataTable(
                     id='zona-order-table',
@@ -120,7 +186,7 @@ def layout():
                         'selector': '.dash-cell div.dash-cell-value',
                         'rule': 'display: inline; white-space: inherit; overflow: inherit; text-overflow: inherit;'
                     }],
-                ),
+                ), 
             ], id='empty-div', style={'padding': '24px'}),
         ], id='map-empty-div-container'),
         html.Div([
@@ -129,6 +195,32 @@ def layout():
             ),
         ], id='new-row'),
     ], className='my-layout')
+
+@app.callback(
+    Output('date-picker-range', 'start_date'),
+    Output('date-picker-range', 'end_date'),
+    Input('btn-month', 'n_clicks'),
+    Input('btn-fortnight', 'n_clicks'),
+    Input('btn-week', 'n_clicks'),
+    Input('btn-day', 'n_clicks'),
+    prevent_initial_call=True,
+)
+def update_date_range(n_month, n_fortnight, n_week, n_day):
+    ctx = dash.callback_context
+    if not ctx.triggered:
+        return dash.no_update, dash.no_update
+    else:
+        button_id = ctx.triggered[0]['prop_id'].split('.')[0]
+        today = dt.today()
+        if button_id == 'btn-month':
+            start_date = today - timedelta(days=30)
+        elif button_id == 'btn-fortnight':
+            start_date = today - timedelta(days=15)
+        elif button_id == 'btn-week':
+            start_date = today - timedelta(days=7)
+        elif button_id == 'btn-day':
+            start_date = today - timedelta(days=1)
+        return start_date, today
 
 @app.callback(
     [Output('total-precio-lab', 'children'),
@@ -201,6 +293,28 @@ def update_map(selected_product, start_date, end_date):
     )
 
     return map_fig
+
+@app.callback(
+    Output("map-modal", "is_open"),
+    [Input("open-map-button", "n_clicks"), Input("close-map-button", "n_clicks")],
+    [State("map-modal", "is_open")],
+)
+def toggle_modal(n1, n2, is_open):
+    if n1 or n2:
+        return not is_open
+    return is_open
+
+@app.callback(
+    Output('map-popup', 'figure'),
+    Input('map-modal', 'is_open'),
+    [State('product-dropdown', 'value'),
+     State('date-picker-range', 'start_date'),
+     State('date-picker-range', 'end_date')]
+)
+def update_popup(is_open, selected_product, start_date, end_date):
+    if is_open:
+        return update_map(selected_product, start_date, end_date)  # Call the function that updates the map
+    return dash.no_update
 
 @app.callback(
     Output('zona-order-table', 'data'),
